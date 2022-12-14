@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: mealie
+  name: mealie
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: mealie.k8s.ohnoitsyou.network
+    http:
+      paths:
+      - backend:
+          service:
+            name: mealie
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - '*.k8s.ohnoitsyou.network'
+    secretName: wildcard-cert-prod

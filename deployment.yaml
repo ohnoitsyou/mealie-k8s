@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mealie
+  name: mealie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+      - image: hkotel/mealie:latest
+        name: mealie
+        volumeMounts:
+        - name: mealie-data
+          mountPath: /app/data
+      volumes:
+      - name: mealie-data
+        persistentVolumeClaim:
+          claimName: mealie-data
